@@ -1,0 +1,45 @@
+# Chit No. 11 – Create Project Plan Using Gantt Chart
+# Language: Python
+# Library: Matplotlib (NOT MATLAB)
+
+import matplotlib.pyplot as plt
+
+# ----- Step 1: Define Project Details -----
+project_name = "Website Development"
+start_day = 1
+
+# ----- Step 2: Define Tasks -----
+# Format: (Task Name, Start Day, Duration, Resource)
+tasks = [
+    ("Requirement Analysis", 1, 4, "Business Analyst"),
+    ("Design", 5, 5, "UI/UX Designer"),
+    ("Frontend Development", 10, 6, "Frontend Dev"),
+    ("Backend Development", 10, 7, "Backend Dev"),
+    ("Integration & Testing", 17, 5, "QA Engineer"),
+    ("Deployment", 22, 2, "DevOps Engineer")
+]
+
+# ----- Step 3: Define Milestones -----
+milestones = [("Design Completed", 9), ("Project Go-Live", 23)]
+
+# ----- Step 4: Plot Gantt Chart -----
+fig, ax = plt.subplots(figsize=(8, 5))
+for i, (task, start, duration, resource) in enumerate(tasks):
+    ax.barh(i, duration, left=start, height=0.4, color="skyblue")
+    ax.text(start + duration / 2, i, resource, ha="center", va="center", color="black", fontsize=8)
+
+# ----- Step 5: Add Milestones -----
+for milestone, day in milestones:
+    ax.plot(day, len(tasks) - 0.5, "r*", markersize=10)
+    ax.text(day + 0.3, len(tasks) - 0.5, milestone, va="center", fontsize=8, color="red")
+
+# ----- Step 6: Formatting -----
+ax.set_yticks(range(len(tasks)))
+ax.set_yticklabels([t[0] for t in tasks])
+ax.set_xlabel("Project Days")
+ax.set_title(f"Gantt Chart for Project: {project_name}")
+ax.invert_yaxis()
+plt.tight_layout()
+
+# ----- Step 7: Display -----
+plt.show()
